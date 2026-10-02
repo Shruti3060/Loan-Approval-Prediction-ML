@@ -82,3 +82,11 @@ Save Trained Model
 Streamlit Web Application
      ↓
 Loan Prediction
+
+##  Live Demo
+
+Try the deployed Loan Approval Prediction application:
+
+[Loan Approval Predictor](https://loan-approval-prediction-ml-fynm7n4ycpiqptrl7keiky.streamlit.app/)
+
+
