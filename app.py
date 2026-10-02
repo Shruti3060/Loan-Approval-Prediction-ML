@@ -19,7 +19,12 @@ st.write("Enter applicant details to predict loan approval.")
 st.divider()
 
 # Input fields
-loan_id = st.number_input("Loan ID", min_value=1, value=1)
+
+loan_id = st.number_input(
+    "Loan ID",
+    min_value=1,
+    value=1
+)
 
 no_of_dependents = st.number_input(
     "Number of Dependents",
@@ -99,7 +104,7 @@ st.divider()
 # Prediction button
 if st.button("🔮 PREDICT LOAN", use_container_width=True):
 
-    # Convert categorical values into the same format used during training
+    # Convert categorical values into numeric format
     education_value = 1 if education == "Graduate" else 0
     self_employed_value = 1 if self_employed == "Yes" else 0
 
@@ -132,16 +137,22 @@ if st.button("🔮 PREDICT LOAN", use_container_width=True):
         "bank_asset_value"
     ])
 
-    # Prediction
+    # Make prediction
     prediction = model.predict(new_applicant)[0]
 
-    # Probability
-    probability = model.predict_proba(new_applicant)[0][1] * 100
+    # Get probabilities
+    probabilities = model.predict_proba(new_applicant)[0]
+
+    # Approval probability
+    approval_probability = probabilities[1] * 100
 
     # Display result
     if prediction == 1:
         st.success("✅ LOAN APPROVED")
-        st.metric("Approval Probability", f"{probability:.2f}%")
     else:
         st.error("❌ LOAN REJECTED")
-        st.metric("Approval Probability", f"{probability:.2f}%")
+
+    st.metric(
+        "Approval Probability",
+        f"{approval_probability:.2f}%"
+    )
